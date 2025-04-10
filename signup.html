@@ -5,81 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register & Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="signup.css">
+    <style>
+        .blurred-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(8px);
+            pointer-events: none;
+        }
+        .signup-container {
+            position: relative;
+            z-index: 1;
+        }
+        .blurred-background * {
+            pointer-events: none;
+        }
+        .container#signup, .container#signIn {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        .background-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 200vh; /* Double the viewport height for smooth scrolling */
+            background-color: #f8f9fa;
+        }
+    </style>
     <script type="module" src="firebaseauth.js"></script>
 </head>
 <body>
-    <div class="container" id="signup" style="display:none;">
-      <h1 class="form-title">Register</h1>
-      <form method="post" action="">
-        <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
-        <div class="input-group">
-           <i class="fas fa-user"></i>
-           <input type="text"  id="fName" placeholder="First Name" required>
-           <label for="fname">First Name</label>
+    <!-- Blurred background content -->
+    <div class="blurred-background">
+        <div class="background-content">
+            <!-- top banner -->
+           
+
+            <!-- nav bar -->
+            <nav>
+                <div class="container main-nav flex">
+                    <a href="#" class="company-logo">
+                        <img src="./assets/asset 1.png" alt="company logo">
+                    </a>
+                    <div class="nav-links" id="nav-links">
+                        <ul class="flex">
+                            <li><a href="#" class="hover-link">Home</a></li>
+                            <li><a href="#" class="hover-link">Forum</a></li>
+                            <li><a href="#" class="hover-link">Docs</a></li>
+                            <li><a href="#" class="hover-link">blog</a></li>
+                            <li><a href="signup.html" class="hover-link secondary-button">Sign in/Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- companies section -->
+            <section class="companies-section">
+                <div class="container">
+                    <div id="nospace" class="small-bold-text companies-header"><marquee behavior="scroll" scrollamount="2" loop="1">New Updates relesed Every month according to most asked questions</marquee></div>
+                </div>
+            </section>
+
+            <!-- header section -->
+            <header>
+                <div class="container header-section flex">
+                    <div class="header-left">
+                        <h1>Join the PrayasOS Community</h1>
+                        <p>Experience ultimate performance on low-end devices with our ultra-lightweight, fully customized OS—optimized for efficiency like no other!.</p>
+                        <a href="#" class="primary-button get-started-btn">Get Started</a>
+                    </div>
+                    <div class="header-right">
+                        <img src="./assets/asset 2.png" alt="hero image">
+                    </div>
+                </div>
+            </header>
+
+            <!-- features section -->
+            <section class="features-section">
+                <div class="container">
+                    <div class="features-header">
+                        <h2 class="features-heading-text">Didn't find an answer?</h2>
+                        <a href="#" class="secondary-button">Ask a new Question <i class="fa-solid fa-right-long"></i></a>
+                    </div>
+                    <div class="features-area flex">
+                        <div class="features-card flex">
+                            <img src="./assets/asset 11.svg" alt="">
+                            <h4>2.5 million <br> average daily visitors</h4>
+                        </div>
+                        <div class="features-card flex">
+                            <img src="./assets/asset 13.svg" alt="">
+                            <h4>6000 <br> posts daily</h4>
+                        </div>
+                        <div class="features-card flex">
+                            <img src="./assets/asset 14.svg" alt="">
+                            <h4>2 hour average response time</h4>
+                        </div>
+                        <div class="features-card flex">
+                            <img src="./assets/asset 15.svg" alt="">
+                            <h4>330 million customers helped annually</h4>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- footer -->
+            <footer>
+                <div class="container flex footer-container">
+                    <a href="#" class="company-logo">
+                        <img src="./assets/asset 1.png" alt="company logo">
+                    </a>
+                    <div class="link-column flex">
+                        <h4><a href="#">Home</a></h4>
+                    </div>
+                    <div class="link-column flex">
+                        <h4>Forum</h4>
+                    </div>
+                    <div class="link-column flex">
+                        <h4>Docs</h4>
+                    </div>
+                    <div class="link-column flex">
+                        <h4>Blog</h4>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- subfooter -->
+            <div class="subfooter">
+                <div class="container flex subfooter-container">
+                    <a class="hover-link" href="#">Contacts Team<br></a>
+                    <a class="hover-link" href="#">Privacy Policy<br></a>
+                    <a class="hover-link" href="#">Terms & Conditions</a>
+                    <a class="hover-link" href="#"> © Copyright 2025</a>
+                    <a class="hover-link" href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a class="hover-link" href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
         </div>
-        <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text"  id="lName" placeholder="Last Name" required>
-            <label for="lName">Last Name</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email"  id="rEmail" placeholder="Email" required>
-            <label for="rEmail">Email</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="rPassword"  placeholder="Password" required>
-            <label for="rPassword">Password</label>
-        </div>
-       <button class="btn" id="submitSignUp" >Sign Up</button>
-      </form>
-      <p class="or">
-        ----------or--------
-      </p>
-      <div class="icons">
-        <i class="fab fa-google"></i>
-        <i class="fab fa-facebook"></i>
-      </div>
-      <div class="links">
-        <p>Already Have Account ?</p>
-        <button id="signInButton">Sign In</button>
-      </div>
     </div>
 
-  <div class="container" id="signIn">
-        <h1 class="form-title">Sign In</h1>
-        <form method="post" action="">
-          <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+    <!-- Signup/Login Forms -->
+    <div class="signup-container">
+        <div class="container" id="signup" style="display:none;">
+            <div class="form-logo">
+                <img src="./assets/asset 1.png" alt="company logo">
+            </div>
+            <h1 class="form-title">Register</h1>
+            <form method="post" action="">
+                <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="fName" placeholder="First Name" required>
+                    <label for="fname">First Name</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="lName" placeholder="Last Name" required>
+                    <label for="lName">Last Name</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="rEmail" placeholder="Email" required>
+                    <label for="rEmail">Email</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="rPassword" placeholder="Password" required>
+                    <label for="rPassword">Password</label>
+                </div>
+                <button class="btn" id="submitSignUp">Sign Up</button>
+            </form>
+            <p class="or">----------or--------</p>
+            <div class="icons">
+                <i class="fab fa-google"></i>
+                <i class="fab fa-facebook"></i>
+            </div>
+            <div class="links">
+                <p>Already Have Account ?</p>
+                <button id="signInButton">Sign In</button>
+            </div>
+        </div>
 
-          <div class="input-group">
-              <i class="fas fa-envelope"></i>
-              <input type="email"  id="email" placeholder="Email" required>
-              <label for="email">Email</label>
-          </div>
-          <div class="input-group">
-              <i class="fas fa-lock"></i>
-            <input type="password" id="password"  placeholder="Password" required>
-              <label for="password">Password</label>
-          </div>
-          <p class="recover">
-            <a href="#">Recover Password</a>
-          </p>
-         <button  class="btn"  id="submitSignIn">Sign In</button>
-        </form>
-        <p class="or">
-          ----------or--------
-        </p>
-        <div class="icons">
-          <i class="fab fa-google"></i>
-          <i class="fab fa-facebook"></i>
+        <div class="container" id="signIn">
+            <div class="form-logo">
+                <img src="./assets/asset 1.png" alt="company logo">
+            </div>
+            <h1 class="form-title">Sign In</h1>
+            <form method="post" action="">
+                <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+                </div>
+                <button class="btn" id="submitSignIn">Sign In</button>
+            </form>
+            <p class="or">----------or--------</p>
+            <div class="links">
+                <p>Don't have account yet?</p>
+                <button id="signUpButton">Sign Up</button>
+            </div>
         </div>
-        <div class="links">
-          <p>Don't have account yet?</p>
-          <button id="signUpButton">Sign Up</button>
-        </div>
-      </div>
-      <script src="script.js"></script>
+    </div>
+
+    <script src="https://kit.fontawesome.com/c1fc3d2826.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>

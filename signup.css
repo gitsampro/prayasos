@@ -4,72 +4,127 @@
     box-sizing:border-box;
     font-family:"poppins",sans-serif;
 }
-body{
-    background-color: #c9d6ff;
-    background:linear-gradient(to right,#e2e2e2,#c9d6ff);
+
+body {
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
 }
-.container{
-    background:#fff;
-    width:450px;
-    padding:1.5rem;
-    margin:50px auto;
-    border-radius:10px;
-    box-shadow:0 20px 35px rgba(0,0,1,0.9);
+
+.blurred-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(8px);
+    pointer-events: none;
+    transform: scale(1.1); /* Slightly larger to prevent blur edges */
+    animation: scrollBackground 60s linear infinite;
 }
+
+@keyframes scrollBackground {
+    0% {
+        transform: scale(1.1) translateY(0);
+    }
+    100% {
+        transform: scale(1.1) translateY(-100%);
+    }
+}
+
+.blurred-background > * {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-logo {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.form-logo img {
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.container {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.9);
+    width: 450px;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-text-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0;
+}
+
 form{
     margin:0 2rem;
 }
-.form-title{
-    font-size:1.5rem;
-    font-weight:bold;
-    text-align:center;
-    padding:1.3rem;
-    margin-bottom:0.4rem;
-}
-input{
-    color:inherit;
-    width:100%;
-    background-color:transparent;
-    border:none;
-    border-bottom:1px solid #757575;
-    padding-left:1.5rem;
-    font-size:15px;
-}
 .input-group{
-    padding:1% 0;
-    position:relative;
-
+    position: relative;
+    margin-bottom: 25px;
 }
 .input-group i{
-    position:absolute;
-    color:black;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-text-color);
 }
-input:focus{
-    background-color: transparent;
-    outline:transparent;
-    border-bottom:2px solid hsl(327,90%,28%);
+.input-group input{
+    width: 100%;
+    padding: 12px 40px;
+    border: 1px solid var(--secondary-text-color);
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
 }
-input::placeholder{
-    color:transparent;
+.input-group input:focus{
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(16, 163, 127, 0.3);
 }
-label{
-    color:#757575;
-    position:relative;
-    left:1.2em;
-    top:-1.3em;
-    cursor:auto;
-    transition:0.3s ease all;
+.input-group label{
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-text-color);
+    transition: all 0.3s ease;
+    pointer-events: none;
 }
-input:focus~label,input:not(:placeholder-shown)~label{
-    top:-3em;
-    color:hsl(327,90%,28%);
-    font-size:15px;
+.input-group input:focus + label,
+.input-group input:valid + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    background: white;
+    padding: 0 5px;
+    color: var(--accent-color);
 }
 .recover{
     text-align:right;
     font-size:1rem;
     margin-bottom:1rem;
-
 }
 .recover a{
     text-decoration:none;
@@ -79,70 +134,98 @@ input:focus~label,input:not(:placeholder-shown)~label{
     color:blue;
     text-decoration:underline;
 }
-button{
-    font-size:1.1rem;
-    padding:8px 0;
-    border-radius:5px;
-    outline:none;
-    border:none;
-    width:100%;
-    background:rgb(125,125,235);
-    color:white;
-    cursor:pointer;
-    transition:0.9s;
+.btn{
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-button:hover{
-    background:#07001f;
+.btn:hover{
+    background-color: var(--accent-color-dark);
 }
 .or{
-    font-size:1.1rem;
-    margin-top:0.5rem;
-    text-align:center;
+    text-align: center;
+    margin: 20px 0;
+    color: var(--secondary-text-color);
 }
 .icons{
-    text-align:center;
+    text-align: center;
+    margin: 20px 0;
 }
 .icons i{
-    color:rgb(125,125,235);
-    padding:0.8rem 1.5rem;
-    border-radius:10px;
-    font-size:1.5rem;
-    cursor:pointer;
-    border:2px solid #dfe9f5;
-    margin:0 15px;
-    transition:1s;
+    font-size: 24px;
+    margin: 0 10px;
+    color: var(--secondary-text-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 .icons i:hover{
-    background:#07001f;
-    font-size:1.6rem;
-    border:2px solid rgb(125,125,235);
+    color: var(--accent-color);
 }
 .links{
-    display:flex;
-    justify-content:space-around;
-    padding:0 4rem;
-    margin-top:0.9rem;
-    font-weight:bold;
+    text-align: center;
+    margin-top: 20px;
 }
- #signUpButton, #signInButton{
-    color:rgb(125,125,235);
-    border:none;
-    background-color:transparent;
-    font-size:1rem;
-    font-weight:bold;
+.links p{
+    color: var(--secondary-text-color);
+    margin-bottom: 10px;
 }
-#signUpButton:hover, #signInButton:hover {
-    text-decoration:underline;
-    color:blue;
-} 
-.message{
-    background-color: hsl(327, 90%, 28%);
-    text-align:center;
-    font-size:1rem;
-    margin-top:10px;
-    color:rgb(255, 255, 255);
-    padding: 10px 20px;
-    border-radius: 1rem;
-  opacity: 0;  
-  animation: fadeOut 7s forwards;
+.links button{
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+.links button:hover{
+    color: var(--accent-color-dark);
+}
+.messageDiv{
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+.messageDiv.error{
+    background-color: #ffebee;
+    color: #c62828;
+}
+.messageDiv.success{
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        margin: 20px auto;
+    }
+    
+    .form-logo img {
+        max-width: 150px;
+    }
+    
+    .form-title {
+        font-size: 24px;
+    }
+    
+    .input-group input {
+        padding: 10px 35px;
+    }
+    
+    .btn {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .form-logo img {
+        max-width: 120px;
+    }
 }

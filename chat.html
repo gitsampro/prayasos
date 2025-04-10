@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask a Question - PrayasOS Community</title>
+    <link rel="icon" type="image/png" href="./assets/favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="media-queries.css">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .ask-question-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .ask-question-btn:hover {
+            background-color: #45a049;
+        }
+
+        .ask-question-btn i {
+            font-size: 0.9rem;
+        }
+
+        .question-form {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            align-self: flex-start;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .success-message {
+            display: none;
+            padding: 8px;
+            margin: 10px 0;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .question-item {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .question-header {
+            padding: 10px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-title {
+            margin: 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .expand-icon {
+            font-size: 1rem;
+            color: #666;
+            transition: transform 0.3s;
+        }
+
+        .question-meta {
+            padding: 6px 10px;
+            background-color: #f8f9fa;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .question-content {
+            display: none;
+            padding: 12px;
+        }
+
+        .question-content p {
+            margin: 0 0 12px 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .action-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .action-btn.active {
+            background-color: #e3f2fd;
+            border-color: #2196F3;
+            color: #2196F3;
+        }
+
+        .action-btn i {
+            font-size: 0.8rem;
+        }
+
+        .reply-section {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .reply-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .reply-textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .replies-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reply-item {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .reply-item p {
+            margin: 0 0 8px 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .reply-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .reply-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            background-image: url('./assets/asset 32.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- nav bar -->
+    <nav>
+        <div class="container main-nav flex">
+            <a href="#" class="company-logo">
+                <img src="./assets/asset 1.png" alt="company logo">
+            </a>
+            <div class="nav-links" id="nav-links">
+                <ul class="flex">
+                    <li><a href="index.html" class="hover-link">Home</a></li>
+                    <li><a href="#" class="hover-link">Forum</a></li>
+                    <li><a href="#" class="hover-link">Docs</a></li>
+                    <li><a href="#" class="hover-link">blog</a></li>
+                    <li class="user-menu">
+                        <a href="#" class="hover-link secondary-button" id="userEmail"><span id="loggedUserEmail"></span></a>
+                        <!-- User Details Popup -->
+                        <div class="user-popup" id="userPopup">
+                            <div class="popup-content">
+                                <div class="user-details">
+                                    <p>Name: &nbsp;<span id="popupFName"></span>&nbsp;<span id="popupLName"></span></p>
+                                    <p>Email:&nbsp;<span id="popupEmail"></span></p>
+                                </div>
+                                <button id="logoutBtn" class="logout-button">Logout</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a href="#" class="nav-toggle hover-link" id="nav-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <button class="ask-question-btn" id="askQuestionBtn">
+            <i class="fa-solid fa-plus"></i>
+            Ask a Question
+        </button>
+        <form class="question-form" id="questionForm">
+            <div class="form-group">
+                <label for="questionTitle">Question Title</label>
+                <input type="text" id="questionTitle" required placeholder="Enter a clear title for your question">
+            </div>
+            <div class="form-group">
+                <label for="questionDescription">Question Description</label>
+                <textarea id="questionDescription" required placeholder="Describe your question in detail..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Post Question</button>
+        </form>
+        <div id="successMessage" class="success-message">
+            Your question has been posted successfully!
+        </div>
+
+        <!-- Questions List -->
+        <div class="questions-list" id="questionsList">
+            <!-- Questions will be dynamically added here -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button id="prevPage" class="page-btn" disabled>Previous</button>
+            <button id="nextPage" class="page-btn">Next</button>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer>
+        <div class="container flex footer-container">
+            <a href="#" class="company-logo">
+                <img src="./assets/asset 1.png" alt="company logo">
+            </a>
+            <div class="link-column flex">
+                <h4><a href="#">Home</a></h4>
+            </div>
+            <div class="link-column flex">
+                <h4>Forum</h4>
+            </div>
+            <div class="link-column flex">
+                <h4>Docs</h4>
+            </div>
+            <div class="link-column flex">
+                <h4>Blog</h4>
+            </div>
+        </div>
+    </footer>
+
+    <!-- subfooter -->
+    <div class="subfooter">
+        <div class="container flex subfooter-container">
+            <a class="hover-link" href="#">Contacts Team<br></a>
+            <a class="hover-link" href="#">Privacy Policy<br></a>
+            <a class="hover-link" href="#">Terms & Conditions</a>
+            <a class="hover-link" href="#"> © Copyright 2025</a>
+            <a class="hover-link" href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a class="hover-link" href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/c1fc3d2826.js" crossorigin="anonymous"></script>
+    <script type="module" src="chat.js"></script>
+</body>
+</html> 

@@ -156,6 +156,8 @@ ul {
 .main-nav {
     margin-top: 20px;
     justify-content: space-between;
+    position: relative;
+    z-index: 1000;
 }
 
 .company-logo img {
@@ -174,6 +176,65 @@ ul {
 
 .nav-toggle {
     display: none;
+}
+
+/* Mobile Navigation */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: white;
+        z-index: 1000;
+        display: none;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        display: block;
+    }
+
+    .nav-links ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 60px;
+    }
+
+    .nav-toggle {
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .nav-toggle i {
+        font-size: 1.5rem;
+    }
+
+    .user-menu {
+        position: static;
+    }
+
+    .user-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .main-nav {
+        padding: 10px;
+    }
+
+    .company-logo img {
+        width: 150px;
+    }
 }
 
 /* header section */

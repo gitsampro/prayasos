@@ -74,7 +74,7 @@
             <div class="header-left">
                 <h1>Join the PrayasOS Community</h1>
                 <p>Experience ultimate performance on low-end devices with our ultra-lightweight, fully customized OS—optimized for efficiency like no other!.</p>
-                <a href="#" class="primary-button get-started-btn">Get Started</a>
+                <a href="signup.html" class="primary-button get-started-btn">Get Started</a>
             </div>
             <div class="header-right">
                 <img src="./assets/asset 2.png" alt="hero image">
@@ -273,9 +273,26 @@
             }, 500);
         }, 5000);
 
-        toggleButton.addEventListener('click', () => {
+        // Mobile menu toggle
+        toggleButton.addEventListener('click', (e) => {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
-        })
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !toggleButton.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        const navItems = navLinks.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
     </script>
 
 </body>
