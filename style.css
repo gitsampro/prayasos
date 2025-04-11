@@ -209,6 +209,8 @@ ul {
         font-size: 1.5rem;
         cursor: pointer;
         z-index: 1001;
+        margin-left: auto;
+        margin-right: 20px;
     }
 
     .nav-toggle i {
@@ -230,10 +232,29 @@ ul {
 
     .main-nav {
         padding: 10px;
+        position: relative;
     }
 
     .company-logo img {
         width: 150px;
+    }
+
+    /* Add styles for user email in mobile view */
+    .main-nav .user-email {
+        position: absolute;
+        top: 10px;
+        right: 60px;
+        z-index: 1002;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        background-color: var(--accent-color);
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .main-nav .user-email:hover {
+        background-color: var(--accent-color-dark);
     }
 }
 

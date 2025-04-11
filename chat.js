@@ -12,18 +12,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-let app;
-let auth;
-let db;
-
-try {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    console.log("Firebase initialized successfully");
-} catch (error) {
-    console.error("Error initializing Firebase:", error);
-}
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
 
 // Constants
 const QUESTIONS_PER_PAGE = 1000;
@@ -40,6 +31,8 @@ const questionsList = document.getElementById('questionsList');
 const prevPageBtn = document.getElementById('prevPage');
 const nextPageBtn = document.getElementById('nextPage');
 const askQuestionBtn = document.getElementById('askQuestionBtn');
+const navLinks = document.getElementById('nav-links');
+const navToggle = document.getElementById('nav-toggle');
 
 // Check authentication
 const userId = localStorage.getItem('loggedInUserId');
@@ -90,6 +83,27 @@ logoutBtn.addEventListener('click', () => {
         .catch((error) => {
             console.error('Error signing out:', error);
         });
+});
+
+// Mobile menu toggle
+navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navLinks.classList.toggle('active');
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+    }
+});
+
+// Close mobile menu when clicking on a link
+const navItems = navLinks.querySelectorAll('a');
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+    });
 });
 
 // Format timestamp

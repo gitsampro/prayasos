@@ -111,9 +111,10 @@ form{
     color: var(--secondary-text-color);
     transition: all 0.3s ease;
     pointer-events: none;
+    background: transparent;
 }
 .input-group input:focus + label,
-.input-group input:valid + label {
+.input-group input:not(:placeholder-shown) + label {
     top: -10px;
     left: 10px;
     font-size: 12px;
