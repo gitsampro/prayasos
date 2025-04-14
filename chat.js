@@ -8,13 +8,13 @@ const firebaseConfig = {
     projectId: "forum-359a6",
     storageBucket: "forum-359a6.firebasestorage.app",
     messagingSenderId: "558570896770",
-    appId: "1:558570896770:web:7b5a2e6b4fc96a0891639b"
+    appId: "1:558570896770:web:4e51c8ea00b551ca91639b"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore();
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Constants
 const QUESTIONS_PER_PAGE = 1000;
@@ -33,6 +33,7 @@ const nextPageBtn = document.getElementById('nextPage');
 const askQuestionBtn = document.getElementById('askQuestionBtn');
 const navLinks = document.getElementById('nav-links');
 const navToggle = document.getElementById('nav-toggle');
+const searchInput = document.getElementById('searchInput');
 
 // Check authentication
 const userId = localStorage.getItem('loggedInUserId');
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         await loadQuestions();
     } catch (error) {
-        console.error("Error loading questions on page load:", error);
+        console.error("Error loading questions:", error);
         if (questionsList) {
             questionsList.innerHTML = '<p class="error-message">Error loading questions. Please refresh the page.</p>';
         }
@@ -630,6 +631,9 @@ async function loadQuestions(searchTerm = '') {
             return;
         }
 
+        // Sort questions by creation date (newest first)
+        questions.sort((a, b) => b.createdAt - a.createdAt);
+
         // Display all questions
         questions.forEach(question => {
             const questionElement = createQuestionElement(question);
@@ -673,6 +677,7 @@ questionForm.addEventListener('submit', async (e) => {
     }
 
     try {
+        // Get user data
         const userDoc = await getDoc(doc(db, "users", userId));
         if (!userDoc.exists()) {
             throw new Error("User not found");
@@ -694,6 +699,7 @@ questionForm.addEventListener('submit', async (e) => {
             replies: []
         };
 
+        // Add question to Firestore
         await addDoc(collection(db, "questions"), questionData);
 
         // Show success message
@@ -761,21 +767,6 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // Add search functionality
-const searchInput = document.createElement('input');
-searchInput.type = 'text';
-searchInput.placeholder = 'Search questions...';
-searchInput.className = 'search-input';
-searchInput.style.marginBottom = '20px';
-searchInput.style.padding = '10px';
-searchInput.style.width = '100%';
-searchInput.style.border = '1px solid #ddd';
-searchInput.style.borderRadius = '5px';
-
-// Insert search input before questions list
-const chatContainer = document.querySelector('.chat-container');
-chatContainer.insertBefore(searchInput, questionsList);
-
-// Add search event listener
 searchInput.addEventListener('input', (e) => {
     currentPage = 1; // Reset to first page when searching
     loadQuestions(e.target.value);
